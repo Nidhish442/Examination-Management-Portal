@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="c">
+        <div id="dashb">
+
+            <h1>Admin Dashboard</h1><br>
+
+            <div class="container mb-4">
+
+                <div class="row">
+
+                    <div class="col-md-4">
+
+                        <div class="card text-white bg-primary">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title">
+                                    Total Guides
+                                </h5>
+
+                                <h2>
+                                    {{ total_guides }}
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <div class="card text-white bg-success">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title">
+                                    Total Customers
+                                </h5>
+
+                                <h2>
+                                    {{ total_customers }}
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <div class="card text-white bg-dark">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title">
+                                    Total Bookings
+                                </h5>
+
+                                <h2>
+                                    {{ total_bookings }}
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{{ url_for('admin_dashboard', admin_id=admin_id) }}">
+                                    Guides
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link active"
+                                   href="{{ url_for('chosen_guide', admin_id=admin_id) }}">
+                                    Chosen Guides
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{{ url_for('blocked_guide', admin_id=admin_id) }}">
+                                    Blocked Guide
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{{ url_for('pending_guide', admin_id=admin_id) }}">
+                                    Pending Guides
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{{ url_for('customer', admin_id=admin_id) }}">
+                                    Customer
+                                </a>
+                            </li>
+
+                        </ul>
+
+                        <form class="d-flex" method="GET">
+
+                            <input
+                                class="form-control me-2"
+                                type="search"
+                                name="search"
+                                placeholder="Search"
+                                value="{{ request.args.get('search','') }}">
+
+                            <button class="btn btn-outline-success" type="submit">
+                                Search
+                            </button>
+
+                        </form>
+
+                    </div>
+                </div>
+            </nav>
+
+            <div id="content">
+
+                <h1>Chosen Guides</h1><br>
+
+                <table class="table">
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>CV</th>
+                            <th>Update Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    {% for guide in guides %}
+                    <tr>
+
+                        <th scope="row">{{ loop.index }}</th>
+
+                        <td>{{ guide.name }}</td>
+
+                        <td>{{ guide.email }}</td>
+
+                        <td>{{ guide.phone }}</td>
+
+                        <td>
+                            {% if guide.cv %}
+                                <a href="{{ guide.cv }}" target="_blank">
+                                    View CV
+                                </a>
+                            {% else %}
+                                No CV
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <form action="{{ url_for('update_guide_status', guide_id=guide.id, new_status='blocked') }}" method="POST">
+                                <button type="submit" class="btn btn-danger">
+                                Block
+                                </button>
+                            </form>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="c">
+        <div id="dashb">
+
+            <h1>Student Dashboard</h1><br>
+
+            <div id="gui_d">
+                <h1>Available Examinations</h1><br>
+
+                <div id="gui_d1">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Course</th>
+                                <th scope="col">Examination</th>
+                                <th scope="col">Exam Type</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col">Maximum Marks</th>
+                                <th scope="col">Decision</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for exam in examinations %}
+
+                            <tr>
+                                <th>{{ loop.index }}</th>
+
+                                <td>{{ exam.course.name }}</td>
+
+                                <td>{{ exam.name }}</td>
+
+                                <td>{{ exam.exam_type }}</td>
+
+                                <td>{{ exam.duration_minutes }} minutes</td>
+
+                                <td>{{ exam.maximum_marks }}</td>
+
+                                <td>
+                                    <button
+                                        type="button"
+                                        class="btn btn-primary"
+                                        onclick="window.location.href='{{ url_for('student_view_slots', examination_id=exam.id) }}'">
+                                        View Slots
+                                    </button>
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <div id="gui_d">
+                <h1>My Examination Bookings</h1><br>
+
+                <div id="gui_d1">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Examination</th>
+                                <th scope="col">Exam Date</th>
+                                <th scope="col">Start Time</th>
+                                <th scope="col">End Time</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Result</th>
+                                <th scope="col">Cancel Booking</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for booking in bookings %}
+
+                            <tr>
+                                <th>{{ loop.index }}</th>
+
+                                <td>{{ booking.slot.examination.name }}</td>
+
+                                <td>{{ booking.slot.exam_date }}</td>
+
+                                <td>{{ booking.slot.start_time }}</td>
+
+                                <td>{{ booking.slot.end_time }}</td>
+
+                                <td>{{ booking.status }}</td>
+
+                                <td>
+                                    <a href="{{ url_for('student_view_booking_result', booking_id=booking.id) }}"
+                                    class="btn btn-primary btn-sm">
+                                        View Result
+                                    </a>
+                                </td>
+
+                                <td>
+                                    {% if booking.status == "Booked" and now <= booking.slot.examination.booking_end %}
+                                        <form method="POST"
+                                            action="{{ url_for('cancel_booking', booking_id=booking.id) }}">
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                Cancel Booking
+                                            </button>
+                                        </form>
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+
+                            </tr>
+
+                            {% else %}
+
+                            <tr>
+                                <td colspan="7" class="text-center">
+                                    No examination bookings found.
+                                </td>
+                            </tr>
+
+
+
+                            {% endfor %}
+
+                            
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <div id="creattrekplace">
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="window.location.href='{{ url_for('student_results') }}'">
+                    View Results
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

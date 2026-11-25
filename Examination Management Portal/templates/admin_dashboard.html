@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | EMP</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="c">
+        <div id="dashb">
+
+            <h1>Admin Dashboard</h1>
+            <br>
+
+            <!-- Dashboard summary cards -->
+            <div class="container mb-4">
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+                        <div class="card text-white bg-primary">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Courses</h5>
+                                <h2>{{ total_courses }}</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card text-white bg-success">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Examinations</h5>
+                                <h2>{{ total_examinations }}</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card text-white bg-dark">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Bookings</h5>
+                                <h2>{{ total_bookings }}</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Navigation bar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button
+                        class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse"
+                         id="navbarSupportedContent">
+
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                            <li class="nav-item">
+                                <a class="nav-link active"
+                                   href="{{ url_for('admin_dashboard') }}">
+                                    Examiners
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{{ url_for('manage_courses') }}">
+                                    Courses
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{{ url_for('manage_examinations') }}">
+                                    Examinations
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{{ url_for('manage_slots') }}">
+                                    Exam Slots
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{{ url_for('manage_bookings') }}">
+                                    Bookings
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{{ url_for('manage_results') }}">
+                                    Results
+                                </a>
+                            </li>
+
+                        </ul>
+
+                        <!-- Examiner search -->
+                        <form class="d-flex" method="GET"
+                              action="{{ url_for('admin_dashboard') }}">
+
+                            <input
+                                class="form-control me-2"
+                                type="search"
+                                name="search"
+                                placeholder="Search examiners"
+                                value="{{ request.args.get('search', '') }}">
+
+                            <button class="btn btn-outline-success"
+                                    type="submit">
+                                Search
+                            </button>
+
+                        </form>
+
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main dashboard content -->
+            <div id="content" class="mt-4">
+
+                <h2>Examiner Management</h2>
+                <p>Review examiner registrations and approval status.</p>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Department</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Decision</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for examiner in examiners %}
+                            <tr>
+                                <th scope="row">{{ loop.index }}</th>
+
+                                <td>{{ examiner.full_name }}</td>
+
+                                <td>{{ examiner.email }}</td>
+
+                                <td>
+                                    {{ examiner.department or 'Not provided' }}
+                                </td>
+
+                                <td>
+                                    {% if examiner.status == 'Pending' %}
+                                        <span class="badge bg-warning text-dark">
+                                            Pending
+                                        </span>
+                                    {% elif examiner.status == 'Active' %}
+                                        <span class="badge bg-success">
+                                            Approved
+                                        </span>
+                                    {% elif examiner.status == 'Blocked' %}
+                                        <span class="badge bg-danger">
+                                            Blocked
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">
+                                            {{ examiner.status }}
+                                        </span>
+                                    {% endif %}
+                                </td>
+
+                                
+                                <td>
+                                    {% if examiner.status == 'Pending' %}
+                                        <span class="badge bg-warning text-dark">
+                                            Pending
+                                        </span>
+                                    {% elif examiner.status == 'Active' %}
+                                        <span class="badge bg-success">
+                                            Approved
+                                        </span>
+                                    {% elif examiner.status == 'Blocked' %}
+                                        <span class="badge bg-danger">
+                                            Rejected
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">
+                                            {{ examiner.status }}
+                                        </span>
+                                    {% endif %}
+
+                                    <br><br>
+
+                                    {% if examiner.status != 'Active' %}
+                                        <form action="{{ url_for('update_examiner_status',
+                                                    examiner_id=examiner.id,
+                                                    new_status='Active') }}"
+                                            method="POST"
+                                            style="display:inline;">
+
+                                            <button type="submit" class="btn btn-success btn-sm">
+                                                Approve
+                                            </button>
+                                        </form>
+                                    {% endif %}
+
+                                    {% if examiner.status != 'Blocked' %}
+                                        <form action="{{ url_for('update_examiner_status',
+                                                    examiner_id=examiner.id,
+                                                    new_status='Blocked') }}"
+                                            method="POST"
+                                            style="display:inline;">
+
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                Reject
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </td>
+
+                            </tr>
+
+                            {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    No examiners found.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

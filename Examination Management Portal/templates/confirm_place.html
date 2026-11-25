@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Guide Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="c">
+        <div id="dashb">
+
+            <h1>Guide Dashboard</h1><br>
+
+            <!-- Navigation Bar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button class="navbar-toggler"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation">
+
+                        <span class="navbar-toggler-icon"></span>
+
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{{ url_for('guide_dashboard', guide_id=guide_id) }}">
+                                    Apply
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link active"
+                                   href="{{ url_for('confirm_place', guide_id=guide_id) }}">
+                                    Confirmed
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+            </nav>
+
+            <div id="gui_d">
+
+                <h1>Confirmed Places</h1>
+                <br>
+
+                <div id="gui_d1">
+
+                    <table class="table">
+
+                        <thead>
+
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Place</th>
+                                <th scope="col">Number Of People</th>
+                                <th scope="col">Total Days</th>
+                                <th scope="col">Starting Date</th>
+                                <th scope="col">Ending Date</th>
+                                <th scope="col">Customer Name</th>
+                                <th scope="col">Customer phone</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        {% for place in places %}
+
+                        <tr>
+
+                            <th scope="row">{{ loop.index }}</th>
+
+                            <td>{{ place.place_name }}</td>
+
+                            <td>{{ place.no_of_people }}</td>
+
+                            <td>{{ place.total_days }}</td>
+
+                            <td>{{ place.starting_date }}</td>
+
+                            <td>{{ place.ending_date }}</td>
+
+                            <td>{{ place.customer.name }}</td>
+
+                            <td>{{ place.customer.phone }}</td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

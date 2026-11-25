@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>home</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <div id="main">
+        <div id="canvas">
+
+            <div id="examiner">
+                <h1>Examiner</h1>
+                <div class="text-center">
+                    <h5>Faculty Members Responsible For Conducting Examinations</h5>
+
+                    <button type="button"
+                        class="btn btn-primary"
+                        onclick="window.location.href='/examiner_register'">
+                        Register
+                    </button>
+
+                    <button type="button"
+                        class="btn btn-primary"
+                        onclick="window.location.href='/login'">
+                        Login
+                    </button>
+                </div>
+            </div>
+
+            <div id="admin">
+                <h1>Admin</h1>
+                <div class="text-center">
+                    <h5>Manage the website and its content</h5>
+
+                    <button type="button"
+                        class="btn btn-primary"
+                        onclick="window.location.href='/login'">
+                        Login
+                    </button>
+                </div>
+            </div>
+
+            <div id="student">
+                <h1>Student</h1>
+                <div class="text-center">
+                    <h5>Who writes the Examinations</h5>
+
+                    <button type="button"
+                        class="btn btn-primary"
+                        onclick="window.location.href='/login'">
+                        Login
+                    </button>
+
+                    <button type="button"
+                        class="btn btn-primary"
+                        onclick="window.location.href='/student_register'">
+                        Register
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Available Slots</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="c">
+        <div id="dashb">
+
+            <h1>Available Examination Slots</h1>
+
+            <h3>{{ examination.name }}</h3>
+
+            <div id="gui_d">
+                <div id="gui_d1">
+
+                    <table class="table">
+
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Exam Date</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Available Seats</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for slot in slots %}
+
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ slot.exam_date }}</td>
+                                <td>{{ slot.start_time }}</td>
+                                <td>{{ slot.end_time }}</td>
+                                <td>{{ slot.available_seats }}</td>
+
+                                <td>
+                                    <form method="POST"
+                                        action="{{ url_for('book_slot', slot_id=slot.id) }}">
+
+                                        <button type="submit"
+                                            class="btn btn-primary">
+                                            Book Slot
+                                        </button>
+
+                                    </form>
+                                </td>
+                            </tr>
+
+                            {% else %}
+
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    No available slots.
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+
+            <a href="{{ url_for('student_dashboard') }}"
+                class="btn btn-secondary">
+                Back to Dashboard
+            </a>
+
+        </div>
+    </div>
+
+</body>
+</html>

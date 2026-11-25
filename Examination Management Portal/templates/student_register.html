@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Student Register</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="page">
+        <div id="page_titel">
+            <h1>STUDENT REGISTRATION</h1>
+
+            <form action="/student_register" method="POST">
+        </div>
+
+        <div id="Register">
+
+            <div class="mb-3">
+                <label for="email_input" class="form-label">Email Address</label><br>
+                <input
+                    type="email"
+                    class="form-control"
+                    id="email_input"
+                    placeholder="name@example.com"
+                    name="email"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password_input" class="form-label">Password</label>
+                <input
+                    type="password"
+                    class="form-control"
+                    id="password_input"
+                    name="password"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label for="name_input" class="form-label">Full Name</label><br>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="name_input"
+                    placeholder="Enter your full name"
+                    name="full_name"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label for="username_input" class="form-label">Username</label><br>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="username_input"
+                    placeholder="Enter your username"
+                    name="username"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label for="department_input" class="form-label">Department</label><br>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="department_input"
+                    placeholder="Enter your department"
+                    name="department"
+                    required>
+            </div>
+
+            <div id="register_button">
+                <button type="submit" class="btn btn-primary">
+                    Register
+                </button>
+            </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Customer Register</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="page">
+        <div id="page_titel">
+            <h1>Trek Booking</h1>
+
+            <form action="{{ url_for('booking', customer_id=customer_id) }}" method="post">
+
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="window.location.href='{{ url_for('customer_dashboard', customer_id=customer_id) }}'">
+                    Back
+                </button>
+        </div>
+
+        <div id="book_trek">
+
+            <div class="mb-3">
+                <label class="form-label">Place Name</label><br>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="place">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Days</label><br>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="days"
+                    placeholder="Enter number of days"
+                    name="days">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">People Count</label><br>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="people_count"
+                    placeholder="Enter number of people"
+                    name="people_count">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Starting Date</label><br>
+                <input
+                    type="date"
+                    class="form-control"
+                    id="start_date"
+                    name="start_date">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Ending Date</label><br>
+                <input
+                    type="date"
+                    class="form-control"
+                    id="end_date"
+                    name="end_date">
+            </div>
+
+            <div id="register_button">
+                <button type="submit" class="btn btn-primary">
+                    Book Trek
+                </button>
+            </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</body>
+</html>

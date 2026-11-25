@@ -1,0 +1,143 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Evaluate Student</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="c">
+        <div id="dashb">
+
+            <h1>Student Evaluation</h1>
+            <br>
+
+            <div id="gui_d">
+
+                <h2>Student Details</h2>
+                <br>
+
+                <div id="gui_d1">
+
+                    <p><strong>Student Name:</strong>
+                        {{ booking.student.full_name }}
+                    </p>
+
+                    <p><strong>Examination:</strong>
+                        {{ booking.slot.examination.name }}
+                    </p>
+
+                    <p><strong>Course:</strong>
+                        {{ booking.slot.examination.course.name }}
+                    </p>
+
+                    <p><strong>Exam Date:</strong>
+                        {{ booking.slot.exam_date }}
+                    </p>
+
+                </div>
+
+            </div>
+
+            <br>
+
+            <div id="gui_d">
+
+                <h2>Evaluation Criteria</h2>
+                <br>
+
+                <div id="gui_d1">
+
+                    <form method="POST">
+
+                        <table class="table">
+
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Criteria</th>
+                                    <th>Maximum Marks</th>
+                                    <th>Marks Awarded</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {% for rubric in rubrics %}
+
+                                <tr>
+
+                                    <td>{{ loop.index }}</td>
+
+                                    <td>{{ rubric.criterion_name }}</td>
+
+                                    <td>{{ rubric.maximum_marks }}</td>
+
+                                    <td>
+                                        <input type="number"
+                                            class="form-control"
+                                            name="marks_{{ rubric.id }}"
+                                            min="0"
+                                            max="{{ rubric.maximum_marks }}"
+                                            step="0.01"
+                                            required>
+                                    </td>
+
+                                </tr>
+
+                                {% else %}
+
+                                <tr>
+                                    <td colspan="4" class="text-center">
+                                        No evaluation criteria available.
+                                    </td>
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Remarks
+                            </label>
+
+                            <textarea class="form-control"
+                                name="remarks"
+                                rows="4"
+                                placeholder="Enter your remarks"></textarea>
+
+                        </div>
+
+                        <button type="submit"
+                            class="btn btn-success">
+                            Submit Evaluation
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <br>
+
+            <a href="{{ url_for('examiner_dashboard') }}"
+                class="btn btn-secondary">
+                Back to Dashboard
+            </a>
+
+        </div>
+    </div>
+
+</body>
+</html>

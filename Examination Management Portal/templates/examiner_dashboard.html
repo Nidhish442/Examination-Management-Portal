@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Examiner Dashboard</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div id="c">
+        <div id="dashb">
+
+            <h1>Examiner Dashboard</h1><br>
+
+            <!-- Navigation Bar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+                <div class="container-fluid">
+
+                    <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+
+                        <span class="navbar-toggler-icon"></span>
+
+                    </button>
+
+                    <div class="collapse navbar-collapse"
+                        id="navbarSupportedContent">
+
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                            <li class="nav-item">
+                                <a class="nav-link active"
+                                   href="{{ url_for('examiner_dashboard') }}">
+                                    Available Examinations
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{{ url_for('examiner_dashboard') }}">
+                                    My Evaluations
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </nav>
+
+
+            <!-- AVAILABLE EXAMINATIONS -->
+
+            <div id="gui_d">
+
+                <h1>Available Examinations</h1><br>
+
+                <div id="gui_d1">
+
+                    <table class="table">
+
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Course</th>
+                                <th scope="col">Examination</th>
+                                <th scope="col">Exam Type</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col">Maximum Marks</th>
+                                <th scope="col">Choice</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for exam in examinations %}
+
+                            <tr>
+
+                                <th scope="row">{{ loop.index }}</th>
+
+                                <td>{{ exam.course.name }}</td>
+
+                                <td>{{ exam.name }}</td>
+
+                                <td>{{ exam.exam_type }}</td>
+
+                                <td>{{ exam.duration_minutes }} minutes</td>
+
+                                <td>{{ exam.maximum_marks }}</td>
+
+                                <td>
+
+                                    <button type="button"
+                                        class="btn btn-primary"
+                                        onclick="window.location.href='{{ url_for('examiner_slots', examination_id=exam.id) }}'">
+                                        Create Slots
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+                            {% else %}
+
+                            <tr>
+                                <td colspan="7" class="text-center">
+                                    No examinations available.
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- MY EVALUATIONS -->
+
+            <div id="gui_d">
+
+                <h1>My Evaluations</h1><br>
+
+                <div id="gui_d1">
+
+                    <table class="table">
+
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Student Name</th>
+                                <th scope="col">Examination</th>
+                                <th scope="col">Exam Date</th>
+                                <th scope="col">Booking Status</th>
+                                <th scope="col">Choice</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for booking in bookings %}
+
+                            <tr>
+
+                                <th scope="row">{{ loop.index }}</th>
+
+                                <td>{{ booking.student.full_name }}</td>
+
+                                <td>{{ booking.slot.examination.name }}</td>
+
+                                <td>{{ booking.slot.exam_date }}</td>
+
+                                <td>{{ booking.status }}</td>
+
+                                <td>
+
+                                    <form action="{{ url_for('evaluate_student', booking_id=booking.id) }}"
+                                        method="GET">
+
+                                        <button type="submit" class="btn btn-success">
+                                            Evaluate
+                                        </button>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+
+                            {% else %}
+
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    No student bookings available for evaluation.
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
